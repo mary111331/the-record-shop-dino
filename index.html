@@ -120,7 +120,7 @@ ul.ctl{padding-left:18px;margin:10px 0;color:#ddd5ca;font-size:14px}ul.ctl li{ma
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script>
-(function(){var PAGE_V='4.1-dino';window.SHOP_VERSION=PAGE_V;
+(function(){var PAGE_V='4.2-dino';window.SHOP_VERSION=PAGE_V;
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
  if(j&&j.v&&j.v!==PAGE_V){var u=location.pathname+'?v='+encodeURIComponent(j.v);if(location.search.indexOf('v='+j.v)<0){location.replace(u);}}
 }).catch(function(){});}catch(e){}
@@ -129,7 +129,7 @@ try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){retu
 <style>#verBadge{position:fixed;right:8px;bottom:6px;z-index:99999;font:11px/1.2 monospace;color:rgba(255,190,220,.75);background:rgba(0,0,0,.35);padding:2px 6px;border-radius:6px;pointer-events:none}</style>
 </head>
 <body>
-<div id="verBadge">Version 4.1-dino · Dino-Lounge</div>
+<div id="verBadge">Version 4.2-dino · Dino-Lounge</div>
 <canvas id="c" tabindex="0"></canvas>
 <div id="hud" class="hide">
   <div id="where"></div>
@@ -1000,8 +1000,8 @@ function cookieCard(){var left=COOK.filter(function(c){return c.visible;}).lengt
 function tvCard(){var e=EP[TV.ep];card('Dino TV','The old TV in Gerald\u2019s lounge',['A wood-cased TV with rabbit ears on a low sideboard. Gerald keeps it on a dinosaur documentary channel, in German, with subtitles.','Now showing: \u201c'+e.t+'\u201d. '+e.d],[{t:'Sit with Gerald',pri:true,fn:function(){closeCard();loungeSit();}},{t:'Next episode',fn:function(){nextEp(true);caption('Before you can touch the set, Gerald clicks the remote himself. \u201cAllow me.\u201d',5000);}}]);}
 function loungeSit(){P.sit=true;P.sitL=true;P.x=.06;P.z=-16.72;P.eye=1.12;P.yaw=-Math.PI/2+.14;P.pitch=-.08;caption('You sit down on Gerald\u2019s couch. He shifts his tail an inch to make room, which is generous for him. Walk or tap Get up to stand again.',6500);}
 CRATES.gerald={n:'Gerald\u2019s picks',b:'Gerald\u2019s crate in the lounge. A card in tidy handwriting: \u201cNo reissues. No skipping. No cookie fingers on the sleeves.\u201d',w:'the lounge'};
-var GPICKS=['sowhat','monk','hawkins','brubeck','curtis','billie','purple'];
-var GNOTE={sowhat:'Kind of Blue. If you only own one jazz record, you\u2019re doing it wrong. But start here.',monk:'Monk plays the wrong notes on purpose. That\u2019s called taste.',hawkins:'My friend Jay\u2019s namesake. The 1956 Okeh. Accept no reissues.',brubeck:'Five-four time. Mammals find it confusing.',curtis:'Move On Up. Nine minutes, and not one second too long.',billie:'Lady in Satin. I cried. Briefly. With dignity.',purple:'The Purple People Eater. A guilty pleasure. Do not tell the cat.'};
+var GPICKS=['hawkins','sowhat','monk','brubeck','curtis','billie','purple'];
+var GNOTE={sowhat:'Kind of Blue. If you only own one jazz record, you\u2019re doing it wrong. But start here.',monk:'Monk plays the wrong notes on purpose. That\u2019s called taste.',hawkins:'My friend Jay\u2019s namesake. The 1956 Okeh. Accept no reissues. Spiel sie hier bei mir, dann kommt Jay zu uns aufs Sofa.',brubeck:'Five-four time. Mammals find it confusing.',curtis:'Move On Up. Nine minutes, and not one second too long.',billie:'Lady in Satin. I cried. Briefly. With dignity.',purple:'The Purple People Eater. A guilty pleasure. Do not tell the cat.'};
 
 // ---------- walking ----------
 var P={x:0,z:7.6,y:0,yaw:Math.PI,pitch:-.05,eye:1.62,sit:false},rad=.25,doorOpen=false,doorAng=0,buzzN=0;
@@ -1126,7 +1126,7 @@ function sitDown(){P.sit=true;P.sitL=false;P.x=-3.85;P.z=-13.25;P.eye=1.12;P.yaw
 function standUp(){if(!P.sit)return;P.sit=false;if(P.sitL){P.sitL=false;P.x=.85;P.z=-16.3;P.eye=1.62;return;}P.x=-3.2;P.z=-12.2;P.eye=1.62;}
 var CATPATH=[[-1.3,-7.65],[-1.35,-12.5],[.25,-13.35]];
 function petCat(){unlock();CAT.pets++;if(CAT.st==='sleep'){var t=['You scratch her behind the ear. She doesn\u2019t open her eyes, but you can feel a purr start deep inside her.','She stretches one paw toward you without waking up, then goes right back to sleep.','Still asleep. Somebody told you she only gets up for one song.'];caption(t[Math.min(CAT.pets-1,2)],5000);if(CAT.pets===3)setTimeout(function(){caption('From the counter, without looking up: \u201cScreamin\u2019 Jay steht nur f\u00fcr ihren Namensvetter auf. Der R-Kasten hinten.\u201d',6500);},5200);}else caption('She leans into your hand and doesn\u2019t take her eyes off the decks.',4000);}
-function catSpell(){if(CAT.st!=='sleep')return;CAT.st='wake';CAT.t=0;catPose(false);caption('At the first scream, Screamin\u2019 Jay opens one eye. Then both. She jumps down off her tower and pads off toward the listening station.',6500);try{localStorage.setItem('rs-cat','1');}catch(e){}catLiked=true;setTimeout(function(){geraldHonk();caption('From the lounge at the back: one long, low honk. Gerald says hi to his friend Jay.',5500);},7000);}
+function catSpell(){if(jayCouchTry())return;if(CAT.st!=='sleep')return;CAT.st='wake';CAT.t=0;catPose(false);caption('At the first scream, Screamin\u2019 Jay opens one eye. Then both. She jumps down off her tower and pads off toward the listening station.',6500);try{localStorage.setItem('rs-cat','1');}catch(e){}catLiked=true;setTimeout(function(){geraldHonk();caption('From the lounge at the back: one long, low honk. Gerald says hi to his friend Jay.',5500);},7000);}
 function catTick(dt){CAT.t+=dt;var tm=performance.now()/1000;
  if(CAT.st==='sleep'){cBody.scale.y=.6+Math.sin(tm*1.6)*.025;return;}
  if(CAT.st==='wake'){if(CAT.t>1.2){CAT.st='walk';CAT.path=[[CAT.home.x,CAT.home.z]].concat(CATPATH);CAT.seg=0;CAT.u=0;CAT.y0=CAT.home.y;}return;}
@@ -1135,6 +1135,44 @@ function catTick(dt){CAT.t+=dt;var tm=performance.now()/1000;
   cat.position.set(x,y,z);cat.rotation.y=Math.atan2(b[0]-a[0],b[1]-a[1]);cLegs.forEach(function(l,i){l.rotation.x=Math.sin(tm*10+(i%2?Math.PI:0))*.5;});
   if(u>=1){CAT.seg++;CAT.u=0;if(CAT.seg>=p.length-1){cLegs.forEach(function(l){l.rotation.x=0;});if(CAT.st==='walk'){CAT.st='sit';cat.rotation.y=Math.PI;}else{CAT.st='sleep';cat.position.copy(CAT.home);cat.rotation.y=.6;catPose(true);}}}return;}
  if(CAT.st==='sit'){cHead.rotation.x=Math.sin(tm*5.5)*.12;cHead.rotation.z=Math.sin(tm*2.7)*.1;if(NOW!=='hawkins'){CAT.st='home';CAT.path=[[cat.position.x,cat.position.z]].concat(CATPATH.slice(0,-1).reverse()).concat([[CAT.home.x,CAT.home.z]]);CAT.seg=0;CAT.u=0;cHead.rotation.set(0,0,0);caption('The song ends. Screamin\u2019 Jay gives you a long look, then strolls back to her tower.',5000);}}}
+// ---------- v4.x-dino: Screamin' Jay joins Gerald on the couch ----------
+// Play I Put a Spell on You while you are in Gerald's lounge (or from Gerald's picks):
+// Jay walks through the shop into the lounge, jumps onto the couch next to Gerald and
+// bobs her head there. When the song ends she walks back to her tower and sleeps.
+var JAYC={seat:[.2,-17.2,F+.6],face:Math.PI/2,spd:.95,
+ to:[[-1.3,-7.65,F+.09],[-1.35,-12.5,F+.09],[.9,-13.1,F+.09],[2.4,-13.75,F+.09],[2.3,-15.4,F+.09],[.72,-16.25,F+.09],[.72,-17.18,F+.09]],
+ fromStation:[[1.2,-13.75,F+.09],[2.4,-13.75,F+.09],[2.3,-15.4,F+.09],[.72,-16.25,F+.09],[.72,-17.18,F+.09]]};
+function jayCap(t,ms){setTimeout(function(){caption(t,ms);},crateOpen?4700:300);}
+function jayInLounge(){return P.z<-14.6||(crateOpen&&CR.key==='gerald');}
+function jayGo(path,st){CAT.cp=path;CAT.seg=0;CAT.u=0;CAT.st=st;}
+function jayToCouch(from){var p=[[cat.position.x,cat.position.z,cat.position.y]].concat(from).concat([JAYC.seat]);catPose(false);cHead.rotation.set(0,0,0);jayGo(p,'cwalk');}
+function jayCouchTry(){if(!jayInLounge())return false;
+ if(CAT.st==='sleep'){CAT.dest='couch';CAT.st='wake';CAT.t=0;catPose(false);jayCap('Vorne im Laden, beim ersten Schrei: Screamin\u2019 Jay macht ein Auge auf. Dann beide. Sie springt von ihrem Turm und trabt durch den ganzen Laden nach hinten, zu dir und Gerald in die Lounge.',7000);try{localStorage.setItem('rs-cat','1');}catch(e){}catLiked=true;return true;}
+ if(CAT.st==='sit'){CAT.dest=null;jayToCouch(JAYC.fromStation);jayCap('An der H\u00f6rstation spitzt Screamin\u2019 Jay die Ohren: Ihr Lied kommt jetzt aus der Lounge. Sie trabt r\u00fcber zu Gerald.',6500);return true;}
+ if(CAT.st==='cwalk'||CAT.st==='couch')return true;
+ CAT.dest='couch';return true;}
+function jayMove(dt,tm){var p=CAT.cp,a=p[CAT.seg],b=p[CAT.seg+1],L=Math.hypot(b[0]-a[0],b[1]-a[1])||.01;CAT.u+=dt*JAYC.spd/L;var u=Math.min(1,CAT.u);
+ var x=a[0]+(b[0]-a[0])*u,z=a[1]+(b[1]-a[1])*u,y=a[2]+(b[2]-a[2])*u;if(Math.abs(b[2]-a[2])>.05)y+=Math.sin(u*Math.PI)*.25;
+ cat.position.set(x,y,z);if(L>.02)cat.rotation.y=Math.atan2(b[0]-a[0],b[1]-a[1]);cLegs.forEach(function(l,i){l.rotation.x=Math.sin(tm*10+(i%2?Math.PI:0))*.5;});
+ if(u>=1){CAT.seg++;CAT.u=0;if(CAT.seg>=p.length-1){cLegs.forEach(function(l){l.rotation.x=0;});return true;}}return false;}
+function jayArrive(){CAT.st='couch';CAT.dest=null;cat.position.set(JAYC.seat[0],JAYC.seat[2],JAYC.seat[1]);cat.rotation.y=JAYC.face;
+ caption('Screamin\u2019 Jay springt zu Gerald aufs Sofa, dreht sich einmal im Kreis und setzt sich dicht neben ihn. Gerald r\u00fcckt seinen Schwanz ein St\u00fcck zur Seite. \u201eNa, Jay. Dein Lied.\u201c',7500);
+ setTimeout(function(){if(CAT.st==='couch'&&typeof geraldHonk==='function')geraldHonk();},1200);
+ if(P.z<-14.6&&!P.sit)JAYC.glance=1.6;}
+function jayLeave(){var back=JAYC.to.slice(0,-1).reverse().map(function(q){return q.slice();});var p=[[cat.position.x,cat.position.z,cat.position.y],JAYC.to[JAYC.to.length-1]].concat(back).concat([[CAT.home.x,CAT.home.z,CAT.home.y]]);cHead.rotation.set(0,0,0);jayGo(p,'cback');
+ caption('Das Lied ist aus. Screamin\u2019 Jay reibt den Kopf kurz an Geralds Arm, springt vom Sofa und trottet zur\u00fcck zu ihrem Turm.',6000);}
+var _catTickJ=catTick;catTick=function(dt){var tm=performance.now()/1000;
+ if(CAT.st==='wake'&&CAT.dest==='couch'){CAT.t+=dt;if(CAT.t>1.2){CAT.dest=null;jayGo([[CAT.home.x,CAT.home.z,CAT.home.y]].concat(JAYC.to).concat([JAYC.seat]),'cwalk');}return;}
+ if(CAT.st==='cwalk'){if(jayMove(dt,tm))jayArrive();return;}
+ if(JAYC.glance>0){JAYC.glance-=dt;if(!tLook&&!drag){var gd=Math.atan2(-(.1-P.x),-(-17.5-P.z))-P.yaw;while(gd>Math.PI)gd-=2*Math.PI;while(gd<-Math.PI)gd+=2*Math.PI;P.yaw+=gd*Math.min(1,dt*3);}}
+ if(CAT.st==='couch'){cHead.rotation.x=Math.sin(tm*5.5)*.12;cHead.rotation.z=Math.sin(tm*2.7)*.1;cHead.rotation.y=-.35+Math.sin(tm*.7)*.1;if(NOW!=='hawkins')jayLeave();return;}
+ if(CAT.st==='cback'){if(jayMove(dt,tm)){CAT.st='sleep';cat.position.copy(CAT.home);cat.rotation.y=.6;catPose(true);}return;}
+ _catTickJ(dt);
+ if(CAT.dest==='couch'&&NOW==='hawkins'){if(CAT.st==='sit'){CAT.dest=null;jayToCouch(JAYC.fromStation);}else if(CAT.st==='sleep'){CAT.st='wake';CAT.t=0;catPose(false);}}
+ else if(CAT.dest==='couch'&&NOW!=='hawkins'&&(CAT.st==='sleep'||CAT.st==='sit'))CAT.dest=null;
+};
+window.__jay=function(){return {st:CAT.st,dest:CAT.dest||null,x:+cat.position.x.toFixed(2),y:+cat.position.y.toFixed(2),z:+cat.position.z.toFixed(2),cap:(document.getElementById('cap')||{}).textContent};};
+window.__jay.c=JAYC;
 var thump=0;
 function turnPage(){pageAnim=1;}var pageAnim=0;
 function pressBuzzer(){unlock();buzzN++;
