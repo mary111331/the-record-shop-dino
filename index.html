@@ -120,7 +120,7 @@ ul.ctl{padding-left:18px;margin:10px 0;color:#ddd5ca;font-size:14px}ul.ctl li{ma
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script>
-(function(){var PAGE_V='4.3-dino';window.SHOP_VERSION=PAGE_V;
+(function(){var PAGE_V='4.4-dino';window.SHOP_VERSION=PAGE_V;
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
  if(j&&j.v&&j.v!==PAGE_V){var u=location.pathname+'?v='+encodeURIComponent(j.v);if(location.search.indexOf('v='+j.v)<0){location.replace(u);}}
 }).catch(function(){});}catch(e){}
@@ -129,7 +129,7 @@ try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){retu
 <style>#verBadge{position:fixed;right:8px;bottom:6px;z-index:99999;font:11px/1.2 monospace;color:rgba(255,190,220,.75);background:rgba(0,0,0,.35);padding:2px 6px;border-radius:6px;pointer-events:none}</style>
 </head>
 <body>
-<div id="verBadge">Version 4.3-dino · Dino-Lounge</div>
+<div id="verBadge">Version 4.4-dino · Dino-Lounge</div>
 <canvas id="c" tabindex="0"></canvas>
 <div id="hud" class="hide">
   <div id="where"></div>
@@ -830,7 +830,7 @@ var SL={counter:plight(0xffc27a,2.7,9,3.3,F+1.8,-7.6),bin:plight(0xffb466,2.5,9.
 // ---------- v4 Dino: Gerald's lounge, through a new door in the back wall ----------
 // door x 1.55..3.05 up to F+2.15; lounge interior x -0.6..4.5, z -14.8..-19.8
 var LG={x0:-.6,x1:4.5,z0:-14.8,z1:-19.8,dx0:1.55,dx1:3.05,dh:2.15};
-var GER={g:null,head:null,rHand:null,tail:[],torso:null,yaw:-.13,pitch:.1,click:0,next:9},COOK=[],TV={c:null,g:null,t:null,ep:0,ept:0,stat:0,fr:0},tvLight=null,geraldPicksIntro=false;
+var CINE={mats:[],tick:function(t){var ph=Math.floor(t*5);for(var i=0;i<CINE.mats.length;i++)CINE.mats[i].color.setHex(((ph+i)%4)===0?0x5a3a18:0xffd27a);}};var GER={g:null,head:null,rHand:null,tail:[],torso:null,yaw:-.13,pitch:.1,click:0,next:9},COOK=[],TV={c:null,g:null,t:null,ep:0,ept:0,stat:0,fr:0},tvLight=null,geraldPicksIntro=false;
 var EP=[
  {t:'Die Riesen der Kreidezeit',d:'A herd of long-necked sauropods crossing a fern valley at sunset.',sky:['#f2a65a','#7a3f5a'],kind:'sauro',sub:['Vor 75 Millionen Jahren\u2026','\u2026zog diese Herde durch ein Tal voller Farne.','Ein Hals so lang wie ein Bus.','Sie fressen den ganzen Tag. Respekt.']},
  {t:'Der Parasaurolophus: Ein Leben mit Horn',d:'A herd of Parasaurolophus calling to each other through their crests. Gerald watches this one very closely.',sky:['#9fd0d8','#4a7a6a'],kind:'para',sub:['Der Kamm ist innen hohl.','Damit rufen sie, tief wie ein Schiffshorn.','Ein Ruf, und die ganze Herde antwortet.','Elegant. Gebildet. Unterschätzt.']},
@@ -854,10 +854,10 @@ function signFit(txt,x,y,z,ry,w,col){w=w||.5;var m=new THREE.Mesh(new THREE.Plan
  rug.rotation.x=-Math.PI/2;rug.rotation.z=Math.PI/2;rug.position.set(1.7,F+.006,-17.3);scene.add(rug);
  // lights: warm bulb, floor lamp, and the TV glow
  var bul=new THREE.Mesh(new THREE.SphereGeometry(.06,10,8),new THREE.MeshBasicMaterial({color:0xffd59a}));bul.position.set(1.9,CEIL-.35,-17.3);scene.add(bul);box(.01,.3,.01,MAT.dark,1.9,CEIL-.17,-17.3);
- plight(0xffb070,2.4,8.5,1.9,CEIL-.45,-17.3);plight(0xffc890,1.5,3.6,.9,F+1.95,-17.7);plight(0xffb070,1.2,5,2.2,CEIL-.4,-15.4);
+ plight(0xffa060,1.45,8.5,1.9,CEIL-.45,-17.3);plight(0xffc890,1.3,3.6,.9,F+1.95,-17.7);plight(0xff9a60,.75,5,2.2,CEIL-.4,-15.4);
  box(.04,1.5,.04,MAT.dark,-.3,F+.75,-15.6);var sh=new THREE.Mesh(new THREE.CylinderGeometry(.14,.24,.26,14,1,true),new THREE.MeshBasicMaterial({color:0xe8a050,side:THREE.DoubleSide}));sh.position.set(-.3,F+1.55,-15.6);scene.add(sh);box(.3,.03,.3,MAT.dark,-.3,F+.015,-15.6);
- plight(0xff9a50,1.3,4.5,-.2,F+1.4,-15.7);
- tvLight=plight(0x7aa8ff,1.0,4.5,3.6,F+.95,-17.3);
+ plight(0xff9a50,.9,4.5,-.2,F+1.4,-15.7);
+ tvLight=plight(0x9ab8ff,1.4,6.5,3.3,F+1.3,-17.3);
 
  // ---- Gerald's couch: oxblood velvet, against the left wall, facing the TV ----
  var vel=M({map:tex(128,128,function(g,W,H){g.fillStyle='#6e1f26';g.fillRect(0,0,W,H);speck(g,W,H,1600,'#2a0608',.25);speck(g,W,H,500,'#a8454c',.18);})}),vel2=M({color:0x82303a});
@@ -883,17 +883,48 @@ function signFit(txt,x,y,z,ry,w,col){w=w||.5;var m=new THREE.Mesh(new THREE.Plan
  [[0,0],[.1,.05],[-.1,.05],[.05,-.1],[-.06,-.1],[.12,-.06],[-.13,-.04],[0,.12],[.02,-.01]].forEach(function(p,i){var c=new THREE.Mesh(ckGeo,[ckSide,ckTop,ckSide]);c.position.set(1.3+p[0],F+.481+(i===8?.02:0),-17.42+p[1]);c.rotation.y=Math.random()*6;if(i===8){c.rotation.x=.08;}scene.add(c);COOK.push(c);});
  signFit('FARNKEKSE',1.52,F+.5,-16.98,Math.PI/2,.24,'#efe3c4');
 
- // ---- the TV: wood-cased, rabbit ears, on a low sideboard against the right wall ----
- box(.48,.55,1.5,MAT.wood,4.24,F+.275,-17.3);box(.5,.03,1.52,M({color:0x2a1a10}),4.24,F+.565,-17.3);
- var tvc=M({color:0x4a2c16});box(.5,.64,.86,tvc,4.22,F+.9,-17.3);box(.02,.58,.7,MAT.black,3.965,F+.9,-17.36);
- TV.c=document.createElement('canvas');TV.c.width=320;TV.c.height=240;TV.g=TV.c.getContext('2d');TV.t=new THREE.CanvasTexture(TV.c);
- var scr=new THREE.Mesh(new THREE.PlaneGeometry(.64,.48),new THREE.MeshBasicMaterial({map:TV.t}));scr.position.set(3.952,F+.9,-17.36);scr.rotation.y=-Math.PI/2;scene.add(scr);
- [0,1].forEach(function(i){var k=new THREE.Mesh(new THREE.CylinderGeometry(.025,.025,.02,12),MAT.metal);k.rotation.z=Math.PI/2;k.position.set(3.96,F+1.05-i*.12,-16.95);scene.add(k);});
- [-1,1].forEach(function(s){var a=new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,.55,6),MAT.metal);a.position.set(4.22,F+1.22+.25,-17.3+s*.14);a.rotation.x=s*.45;scene.add(a);});var ab=new THREE.Mesh(new THREE.SphereGeometry(.05,10,8),MAT.dark);ab.position.set(4.22,F+1.24,-17.3);scene.add(ab);
+ // ---- v4.x Dino-Kino: the old wood TV grew into a cinema screen that fills the right wall ----
+ var velR=M({map:tex(128,128,function(g,W,H){g.fillStyle='#7a1620';g.fillRect(0,0,W,H);speck(g,W,H,1400,'#2a0408',.25);speck(g,W,H,400,'#b0404a',.16);})});
+ var goldM=new THREE.MeshPhongMaterial({color:0xc9a040,shininess:80,specular:0x665522});
+ var cabM=M({map:tex(128,128,function(g,W,H){g.fillStyle='#4a2c16';g.fillRect(0,0,W,H);for(var i=0;i<40;i++){g.fillStyle='rgba(30,16,6,'+(.15+Math.random()*.2)+')';g.fillRect(0,Math.random()*H,W,1+Math.random()*2);}})});
+ // low stage = the TV's base: speaker grille, two big brass knobs, a row of chase lights
+ box(.4,.2,3.9,M({color:0x3a2010}),4.3,F+.1,-17.3);
+ var grT=tex(512,32,function(g,W,H){g.fillStyle='#5a3a1e';g.fillRect(0,0,W,H);g.fillStyle='#24160a';for(var i=8;i<W-8;i+=7)g.fillRect(i,6,3,H-12);});
+ var grl=new THREE.Mesh(new THREE.PlaneGeometry(2.4,.12),M({map:grT}));grl.position.set(4.098,F+.1,-17.1);grl.rotation.y=-Math.PI/2;scene.add(grl);
+ [-18.75,-18.95].forEach(function(z){var k=new THREE.Mesh(new THREE.CylinderGeometry(.05,.05,.03,16),goldM);k.rotation.z=Math.PI/2;k.position.set(4.09,F+.1,z);scene.add(k);});
+ CINE.mats=[0,1,2,3].map(function(){return new THREE.MeshBasicMaterial({color:0xffd27a});});
+ var bg=new THREE.SphereGeometry(.018,8,6);
+ for(var i=0;i<19;i++){var b=new THREE.Mesh(bg,CINE.mats[i%4]);b.position.set(4.12,F+.215,-15.5-i*.2);scene.add(b);}
+ // the cabinet: wood case, black bezel, and the screen itself (16:9, 3.6 m wide)
+ box(.22,2.17,3.76,cabM,4.39,F+1.29,-17.3);box(.02,2.08,3.66,MAT.black,4.275,F+1.29,-17.3);
+ TV.c=document.createElement('canvas');TV.c.width=768;TV.c.height=432;TV.g=TV.c.getContext('2d');TV.t=new THREE.CanvasTexture(TV.c);TV.t.anisotropy=8;
+ var scr=new THREE.Mesh(new THREE.PlaneGeometry(3.6,2.025),new THREE.MeshBasicMaterial({map:TV.t}));scr.position.set(4.262,F+1.29,-17.3);scr.rotation.y=-Math.PI/2;scene.add(scr);TV.scr=scr;
+ // red velvet curtains on both sides, a valance with gold fringe along the ceiling
+ function curtain(zc){var gq=new THREE.PlaneGeometry(.46,2.35,18,1),pa=gq.attributes.position;for(var j=0;j<pa.count;j++){var u=(pa.getX(j)+.23)/.46;pa.setZ(j,Math.sin(u*Math.PI*7)*.035);}gq.computeVertexNormals();var c=new THREE.Mesh(gq,new THREE.MeshLambertMaterial({map:velR.map,side:THREE.DoubleSide}));c.position.set(4.2,F+1.175,zc);c.rotation.y=-Math.PI/2;scene.add(c);box(.06,.05,.5,goldM,4.17,F+1.0,zc);}
+ curtain(-15.38);curtain(-19.22);
+ box(.16,.1,4.2,velR,4.38,F+2.4,-17.3);box(.17,.02,4.2,goldM,4.38,F+2.345,-17.3);
+ // marquee with chase lights on the back wall
+ var mq=new THREE.Mesh(new THREE.PlaneGeometry(1.5,.34),M({map:tex(512,116,function(g,W,H){g.fillStyle='#4a0c12';g.fillRect(0,0,W,H);g.strokeStyle='#c9a040';g.lineWidth=6;g.strokeRect(8,8,W-16,H-16);g.fillStyle='#ffd27a';g.font='900 58px Georgia,serif';g.textAlign='center';g.textBaseline='middle';g.fillText('DINO-KINO',W/2,H/2+3);})}));mq.position.set(2.9,F+2.0,LG.z1+.02);scene.add(mq);
+ for(var i=0;i<16;i++){var bx=2.2+i*(1.4/15);[F+2.2,F+1.8].forEach(function(by,r){var b=new THREE.Mesh(bg,CINE.mats[(i+r*2)%4]);b.position.set(bx,by,LG.z1+.03);scene.add(b);});}
+ // film posters
+ function poster(x,y,z,ry,title,sub,c1,c2,kind){var p=new THREE.Mesh(new THREE.PlaneGeometry(.5,.72),M({map:tex(200,288,function(g,W,H){var gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,c1);gr.addColorStop(1,c2);g.fillStyle=gr;g.fillRect(0,0,W,H);g.fillStyle='rgba(255,240,200,.8)';g.beginPath();g.arc(150,70,22,0,7);g.fill();g.fillStyle='rgba(30,40,20,.85)';g.fillRect(0,190,W,98);tvSil(g,kind,100,178,1.1,1);g.strokeStyle='#c9a040';g.lineWidth=5;g.strokeRect(5,5,W-10,H-10);g.fillStyle='#ffe9a8';g.textAlign='center';var fs=30;do{g.font='900 '+fs+'px Georgia,serif';fs-=1;}while(g.measureText(title[0]).width>W-24&&fs>12);g.fillText(title[0],W/2,222);if(title[1]){g.fillText(title[1],W/2,252);}g.font='italic 14px Georgia,serif';g.fillStyle='#f0d8b0';g.fillText(sub,W/2,276);})}));p.position.set(x,y,z);p.rotation.y=ry;scene.add(p);box(ry===0?.54:.54,.76,.015,M({color:0x2a180c}),x,y,z+(ry===0?-.012:.012));}
+ poster(.55,F+1.45,LG.z0-.03,Math.PI,['DIE NACHT DER','PARASAURIER'],'Ein Ruf. Die ganze Herde antwortet.','#3a6a7a','#2a1a3a','para');
+ poster(3.8,F+1.45,LG.z0-.03,Math.PI,['T-REX','K\u00d6NIG DER KREIDEZEIT'],'Er hat kleine Arme. Sag es ihm nicht.','#f2a65a','#5a1a1a','rex');
+ poster(4.0,F+1.3,LG.z1+.03,0,['GEGENSEITIGE','HILFE'],'Eine Herde. Kein Chef.','#9fc06a','#2a3a2a','sauro');
+ // amber wall sconces
+ var scM=new THREE.MeshBasicMaterial({color:0xffb060}),scG=new THREE.CylinderGeometry(.07,.04,.16,12,1,false,0,Math.PI);
+ [[LG.x0+.01,-18.95,Math.PI/2],[LG.x0+.01,-15.55,Math.PI/2],[1.1,LG.z0-.01,Math.PI],[3.45,LG.z0-.01,Math.PI]].forEach(function(s){var c=new THREE.Mesh(scG,scM);c.position.set(s[0],F+1.85,s[1]);c.rotation.y=s[2]-Math.PI/2;scene.add(c);});
+ // popcorn cart by the door
+ box(.4,.42,.36,M({color:0xb02424}),.72,F+.21,-15.3);box(.42,.06,.38,M({color:0xb02424}),.72,F+.81,-15.3);
+ box(.34,.12,.3,M({map:tex(64,32,function(g,W,H){g.fillStyle='#f4e2a0';g.fillRect(0,0,W,H);speck(g,W,H,260,'#fff8d8',.8);speck(g,W,H,120,'#d8b050',.6);})}),.72,F+.48,-15.3);
+ box(.38,.36,.34,new THREE.MeshPhongMaterial({color:0xddeeff,transparent:true,opacity:.18,shininess:120}),.72,F+.6,-15.3);
+ signFit('POPCORN',.72,F+.93,-15.3,Math.PI/2,.32,'#ffd34a');
+ // while you sit in the cinema the now-playing panel shrinks into the corner so it never covers the subtitles
+ var kst=document.createElement('style');kst.textContent='body.kino #np{transform:scale(.6);transform-origin:top left;opacity:.8}';document.head.appendChild(kst);
  // ---- Gerald's shelf of picks on the back wall, and a crate under it ----
  shelf(.15,LG.z1,1.75,LG.z1,[F+1.2,F+1.62],0,1,'AUSLESE');
  var st=box(.5,.36,.4,MAT.wood,.95,F+.18,-19.5);crateBox(.95,F+.36,-19.5,0);signFit('GERALDS PICKS',.95,F+.98,-19.28,0,.5,'#efe3c4');
- lean(4.5,-15.2,4.5,-16.1,12,-1,0);lean(2.4,LG.z1,3.4,LG.z1,10,0,1);pile(3.95,-19.35,22);pile(.0,-19.35,18);pile(3.9,-18.55,9);
+ lean(3.3,LG.z0,4.3,LG.z0,12,0,-1);lean(2.4,LG.z1,3.4,LG.z1,10,0,1);pile(3.95,-19.35,22);pile(.0,-19.35,18);pile(3.9,-18.55,9);
  // ---- a fern in a pot, for the theme ----
  var pot=new THREE.Mesh(new THREE.CylinderGeometry(.18,.13,.32,14),M({color:0x9a4a2a}));pot.position.set(-.25,F+.16,-19.4);scene.add(pot);
  var frT=tex(64,128,function(g,W,H){g.clearRect(0,0,W,H);g.strokeStyle='#3d7a2c';g.lineWidth=3;g.beginPath();g.moveTo(32,H);g.lineTo(32,4);g.stroke();g.fillStyle='#4f9a36';for(var i=0;i<14;i++){var y=H-10-i*8.5,l=26-i*1.6;g.beginPath();g.ellipse(32-l/2,y,l/2,3.4,-.35,0,7);g.fill();g.beginPath();g.ellipse(32+l/2,y,l/2,3.4,.35,0,7);g.fill();}});
@@ -917,7 +948,7 @@ function signFit(txt,x,y,z,ry,w,col){w=w||.5;var m=new THREE.Mesh(new THREE.Plan
  // thighs, shins, feet
  [-1,1].forEach(function(s){sph(.16,1,.82,1.55,skin,s*.17,.1,.17);limb([s*.17,.06,.4],[s*.18,-.42,.52],.075,.058,skin);box(.13,.06,.24,skin,s*.18,-.47,.6);[-.04,0,.04].forEach(function(o){sph(.022,1,.7,1.4,belly,s*.18+o,-.47,.73);});});
  // tail: lies along the seat toward the far arm and hangs over it
- var tc=new THREE.CatmullRomCurve3([new THREE.Vector3(-.05,.12,-.24),new THREE.Vector3(-.45,.05,-.22),new THREE.Vector3(-.9,.04,-.12),new THREE.Vector3(-1.3,.08,-.06),new THREE.Vector3(-1.62,.16,-.02),new THREE.Vector3(-1.85,.0,.02)]);
+ var tc=new THREE.CatmullRomCurve3([new THREE.Vector3(.05,.12,-.24),new THREE.Vector3(.38,.07,-.22),new THREE.Vector3(.66,.2,-.14),new THREE.Vector3(.9,-.08,-.04),new THREE.Vector3(1.04,-.42,.14),new THREE.Vector3(1.1,-.47,.46)]);
  for(var i=0;i<20;i++){var u=i/19,p=tc.getPoint(u),r=.17-.135*u;var ts=sph(r,1,.85,1,skin,p.x,p.y,p.z);GER.tail.push({m:ts,y:p.y,u:u});}
  // arms: right claw holds the remote, left claw a fern cookie
  limb([-.19,.52,.16],[-.25,.36,.3],.05,.042,skin);limb([-.25,.36,.3],[-.17,.42,.47],.042,.035,skin);
@@ -945,27 +976,39 @@ function tvSil(g,kind,x,y,s,t){g.save();g.translate(x,y);g.scale(s,s);g.fillStyl
  else if(kind==='ptero'){var f=Math.sin(t*3)*8;g.lineWidth=3;g.beginPath();g.moveTo(-30,f);g.quadraticCurveTo(-14,-6,0,0);g.quadraticCurveTo(14,-6,30,f);g.stroke();g.beginPath();g.ellipse(0,1,6,3,0,0,7);g.fill();g.beginPath();g.moveTo(4,0);g.lineTo(14,2);g.lineTo(4,3);g.fill();g.beginPath();g.moveTo(0,-1);g.lineTo(-8,-6);g.lineTo(-2,0);g.fill();}
  else{g.beginPath();g.ellipse(0,0,30,17,-.2,0,7);g.fill();g.lineWidth=12;g.beginPath();g.moveTo(-24,4);g.quadraticCurveTo(-56,6,-74,18);g.stroke();g.beginPath();g.moveTo(22,-8);g.lineTo(34,-20);g.stroke();g.beginPath();g.moveTo(26,-30);g.lineTo(58,-28);g.lineTo(58,-14);g.lineTo(30,-10);g.fill();g.lineWidth=3;g.beginPath();g.moveTo(24,0);g.lineTo(30,6);g.stroke();g.lineWidth=9;g.beginPath();g.moveTo(-4,10);g.lineTo(-4+st,36);g.moveTo(8,10);g.lineTo(8-st,36);g.stroke();}
  g.restore();}
-function tvDraw(t){var g=TV.g,W=320,H=240,e=EP[TV.ep];
- if(TV.stat>0){var id=g.createImageData(W,H);for(var i=0;i<id.data.length;i+=4){var v=Math.random()*255;id.data[i]=id.data[i+1]=id.data[i+2]=v;id.data[i+3]=255;}g.putImageData(id,0,0);TV.t.needsUpdate=true;return;}
+function tvDraw(t){var g=TV.g,CW=TV.c.width,CH=TV.c.height,S=CH/240,W=CW/S,H=240,e=EP[TV.ep];CINE.tick(t);
+ g.setTransform(1,0,0,1,0,0);
+ if(TV.stat>0){if(!TV.nz){TV.nz=document.createElement('canvas');TV.nz.width=192;TV.nz.height=108;}var nz=TV.nz.getContext('2d'),id=nz.createImageData(192,108);for(var i=0;i<id.data.length;i+=4){var v=Math.random()*255;id.data[i]=id.data[i+1]=id.data[i+2]=v;id.data[i+3]=255;}nz.putImageData(id,0,0);g.imageSmoothingEnabled=false;g.drawImage(TV.nz,0,0,CW,CH);g.imageSmoothingEnabled=true;TV.t.needsUpdate=true;return;}
+ g.setTransform(S,0,0,S,0,0);
  var gr=g.createLinearGradient(0,0,0,H);gr.addColorStop(0,e.sky[0]);gr.addColorStop(1,e.sky[1]);g.fillStyle=gr;g.fillRect(0,0,W,H);
- g.fillStyle='rgba(255,240,200,.85)';g.beginPath();g.arc(250,60,24,0,7);g.fill();
+ g.fillStyle='rgba(255,240,200,.85)';g.beginPath();g.arc(W-90,50,24,0,7);g.fill();
  if(e.kind==='rex'||e.kind==='sauro'){g.fillStyle='rgba(60,30,30,.8)';g.beginPath();g.moveTo(30,170);g.lineTo(95,80);g.lineTo(115,80);g.lineTo(180,170);g.fill();for(var k=0;k<4;k++){var sm=(t*.3+k*.25)%1;g.fillStyle='rgba(90,80,80,'+(.5*(1-sm))+')';g.beginPath();g.arc(105+Math.sin(sm*5+k)*8,78-sm*60,8+sm*16,0,7);g.fill();}}
- if(e.kind==='ptero'){g.fillStyle='#2f6a6a';g.fillRect(0,170,W,70);g.fillStyle='rgba(255,255,255,.25)';for(var k=0;k<12;k++){var wx=(k*37+t*20)%W;g.fillRect(wx,180+(k%4)*12,18,2);}}
- else{g.fillStyle='#4a6a2a';g.fillRect(0,168,W,72);g.fillStyle='#355020';for(var k=0;k<14;k++){var fx=(k*29+5)%W,fy=176+(k%3)*14;g.beginPath();g.moveTo(fx,fy+16);g.quadraticCurveTo(fx-10,fy,fx-16,fy-4);g.quadraticCurveTo(fx-4,fy+2,fx,fy+16);g.quadraticCurveTo(fx+6,fy-2,fx+16,fy-6);g.quadraticCurveTo(fx+8,fy+4,fx,fy+16);g.fill();}}
- if(e.kind==='sauro'){for(var k=0;k<3;k++)tvSil(g,'sauro',((t*14+k*120)%(W+180))-90,150-k*6,.95-k*.18,t+k);}
- else if(e.kind==='para'){for(var k=0;k<4;k++)tvSil(g,'para',((t*18+k*95)%(W+160))-80,160-(k%2)*10,1.05-(k%2)*.2,t+k*.7);if(Math.sin(t*1.3)>.6){g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=2;for(var k=1;k<4;k++){g.beginPath();g.arc(((t*18+95)%(W+160))-80-8,120,k*9,3.6,4.6);g.stroke();}}}
- else if(e.kind==='ptero'){for(var k=0;k<4;k++)tvSil(g,'ptero',((t*24+k*90)%(W+120))-60,70+k*22+Math.sin(t+k)*6,1-k*.12,t+k);}
+ if(e.kind==='ptero'){g.fillStyle='#2f6a6a';g.fillRect(0,170,W,70);g.fillStyle='rgba(255,255,255,.25)';for(var k=0;k<16;k++){var wx=(k*37+t*20)%W;g.fillRect(wx,180+(k%4)*12,18,2);}}
+ else{g.fillStyle='#4a6a2a';g.fillRect(0,168,W,72);g.fillStyle='#355020';for(var k=0;k<19;k++){var fx=(k*29+5)%W,fy=176+(k%3)*14;g.beginPath();g.moveTo(fx,fy+16);g.quadraticCurveTo(fx-10,fy,fx-16,fy-4);g.quadraticCurveTo(fx-4,fy+2,fx,fy+16);g.quadraticCurveTo(fx+6,fy-2,fx+16,fy-6);g.quadraticCurveTo(fx+8,fy+4,fx,fy+16);g.fill();}}
+ if(e.kind==='sauro'){for(var k=0;k<3;k++)tvSil(g,'sauro',((t*14+k*150)%(W+180))-90,150-k*6,.95-k*.18,t+k);}
+ else if(e.kind==='para'){for(var k=0;k<4;k++)tvSil(g,'para',((t*18+k*125)%(W+160))-80,160-(k%2)*10,1.05-(k%2)*.2,t+k*.7);if(Math.sin(t*1.3)>.6){g.strokeStyle='rgba(255,255,255,.7)';g.lineWidth=2;for(var k=1;k<4;k++){g.beginPath();g.arc(((t*18+125)%(W+160))-80-8,120,k*9,3.6,4.6);g.stroke();}}}
+ else if(e.kind==='ptero'){for(var k=0;k<4;k++)tvSil(g,'ptero',((t*24+k*115)%(W+120))-60,60+k*20+Math.sin(t+k)*6,1-k*.12,t+k);}
  else{tvSil(g,'rex',((t*12)%(W+200))-100,150,1.25,t);}
- g.fillStyle='rgba(0,0,0,.45)';g.fillRect(10,10,74,20);g.fillStyle='#ffd34a';g.font='700 14px sans-serif';g.textAlign='left';g.fillText('DINO TV',16,25);
- g.fillStyle='rgba(255,255,255,.85)';g.font='700 11px sans-serif';g.textAlign='right';g.fillText('DOKU',308,24);
- var sub=e.sub[Math.floor(TV.ept/4)%e.sub.length];g.fillStyle='rgba(0,0,0,.55)';g.fillRect(0,206,W,34);g.fillStyle='#fff';g.font='600 15px sans-serif';g.textAlign='center';g.fillText(TV.ept<3.2?e.t:sub,W/2,228);
- g.fillStyle='rgba(0,0,0,.12)';for(var y=0;y<H;y+=3)g.fillRect(0,y,W,1);
+ g.setTransform(1,0,0,1,0,0);
+ g.fillStyle='rgba(0,0,0,.45)';g.fillRect(34,22,190,40);g.fillStyle='#ffd34a';g.font='900 28px sans-serif';g.textAlign='left';g.textBaseline='alphabetic';g.fillText('DINO-KINO',46,52);
+ // the subtitles: huge, bold, white with a thick black outline, on a dark band, so they read from the couch
+ var sub=e.sub[Math.floor(TV.ept/4)%e.sub.length],txt=TV.ept<3.2?e.t:sub,maxW=CW*.74,fs=64,lines;
+ function wrap(){g.font='800 '+fs+'px "Arial Black","Helvetica Neue",Arial,sans-serif';var ws=txt.split(' '),out=[],cur='';ws.forEach(function(w){var tt=cur?cur+' '+w:w;if(g.measureText(tt).width>maxW&&cur){out.push(cur);cur=w;}else cur=tt;});if(cur)out.push(cur);return out;}
+ lines=wrap();while(lines.length>3&&fs>40){fs-=4;lines=wrap();}
+ var lh=fs*1.12,bh=lines.length*lh+22,by=CH-22-bh;
+ g.fillStyle='rgba(0,0,0,.66)';g.fillRect(0,by,CW,bh+22);
+ g.textAlign='center';g.textBaseline='middle';g.lineJoin='round';g.lineWidth=10;g.strokeStyle='#000';g.fillStyle='#fff';
+ lines.forEach(function(l,i){var y=by+11+lh*(i+.5);g.strokeText(l,CW/2,y);g.fillText(l,CW/2,y);});
+ // old-school touch: faint scanlines and rounded picture-tube corners
+ g.fillStyle='rgba(0,0,0,.07)';for(var y=0;y<CH;y+=4)g.fillRect(0,y,CW,1);
+ g.fillStyle='#050404';g.beginPath();g.rect(0,0,CW,CH);var r=34,x0=6,y0=6,x1=CW-6,y1=CH-6;g.moveTo(x0+r,y0);g.arcTo(x0,y0,x0,y0+r,r);g.lineTo(x0,y1-r);g.arcTo(x0,y1,x0+r,y1,r);g.lineTo(x1-r,y1);g.arcTo(x1,y1,x1,y1-r,r);g.lineTo(x1,y0+r);g.arcTo(x1,y0,x1-r,y0,r);g.closePath();g.fill('evenodd');
  TV.t.needsUpdate=true;}
 function nextEp(byGerald){TV.ep=(TV.ep+1)%EP.length;TV.ept=0;TV.stat=.35;GER.click=.6;GER.next=14+Math.random()*10;}
 function geraldTick(dt){if(!GER.g)return;var tm=performance.now()/1000;
+ var bf=coarse?72:66,tf=bf;if(P.sit&&P.sitL){tf=Math.min(bf,Math.max(34,2*Math.atan(Math.tan(26*Math.PI/180)/camera.aspect)*180/Math.PI));}if(Math.abs(camera.fov-tf)>.05){camera.fov+=(tf-camera.fov)*Math.min(1,dt*3);camera.updateProjectionMatrix();}var kk=!!(P.sit&&P.sitL);if(CINE.k!==kk){CINE.k=kk;document.body.classList.toggle('kino',kk);}
  var near=P.z<-12.5;
  TV.ept+=dt;if(TV.stat>0)TV.stat-=dt;
- if(near){TV.fr+=dt;if(TV.fr>.08){TV.fr=0;tvDraw(tm);}tvLight.intensity=.85+Math.sin(tm*7)*.08+Math.sin(tm*13.3)*.06+(TV.stat>0?.3:0);}
+ if(near){TV.fr+=dt;if(TV.fr>.08){TV.fr=0;tvDraw(tm);}tvLight.intensity=1.3+Math.sin(tm*7)*.08+Math.sin(tm*13.3)*.06+(TV.stat>0?.3:0);}
  GER.next-=dt;if(GER.next<=0)nextEp(true);
  if(GER.click>0){GER.click-=dt;}GER.rHand.position.z=.47+(GER.click>0?Math.sin((.6-GER.click)/.6*Math.PI)*.05:0);
  GER.torso.scale.set(1,1+Math.sin(tm*1.4)*.018,1+Math.sin(tm*1.4)*.012);
@@ -1069,8 +1112,8 @@ if(typeof geraldTalk!=='function'){var geraldTalk=function(){card('Gerald','Para
 function cookieCard(){var left=COOK.filter(function(c){return c.visible;}).length;
  card('Fern cookies','On the coffee table, on a brass tray',['Round cookies, each one pressed with a little fern leaf, chocolate chips in between. A folded card: \u201cFARNKEKSE \u00b7 mit Schoko \u00b7 Geralds\u201d.',left?(left+' left on the tray. Gerald has one in his other claw already.'):'The tray is empty. Only crumbs.'],
  [{t:left?'Take one':'Ask Gerald for more',pri:true,fn:function(){closeCard();var v=COOK.filter(function(c){return c.visible;});if(v.length){v[v.length-1].visible=false;caption('You take one. Crunchy at the edge, soft and chocolatey in the middle. From the couch, eyes on the TV: \u201cMind the crumbs. That rug is older than your records.\u201d',6500);}else{COOK.forEach(function(c){c.visible=true;});caption('Gerald sighs, points the remote at the kitchen and clicks. When you look back, the tray is full again. \u201cDon\u2019t ask.\u201d',6000);}}}]);}
-function tvCard(){var e=EP[TV.ep];card('Dino TV','The old TV in Gerald\u2019s lounge',['A wood-cased TV with rabbit ears on a low sideboard. Gerald keeps it on a dinosaur documentary channel, in German, with subtitles.','Now showing: \u201c'+e.t+'\u201d. '+e.d],[{t:'Sit with Gerald',pri:true,fn:function(){closeCard();loungeSit();}},{t:'Next episode',fn:function(){nextEp(true);caption('Before you can touch the set, Gerald clicks the remote himself. \u201cAllow me.\u201d',5000);}}]);}
-function loungeSit(){P.sit=true;P.sitL=true;P.x=.06;P.z=-16.72;P.eye=1.12;P.yaw=-Math.PI/2+.14;P.pitch=-.08;caption('You sit down on Gerald\u2019s couch. He shifts his tail an inch to make room, which is generous for him. Walk or tap Get up to stand again.',6500);}
+function tvCard(){var e=EP[TV.ep];card('Dino-Kino','Geralds Kinoleinwand in der Lounge',['Der alte Holzfernseher ist jetzt so gro\u00df wie eine Kinoleinwand: 3,60 Meter breit, mit rotem Samtvorhang und Lichterkette. Gerald zeigt darauf Dinosaurier-Dokus auf Deutsch, mit riesigen Untertiteln, die man vom Sofa aus lesen kann.','Now showing: \u201c'+e.t+'\u201d. '+e.d],[{t:'Sit with Gerald',pri:true,fn:function(){closeCard();loungeSit();}},{t:'Next episode',fn:function(){nextEp(true);caption('Before you can touch the set, Gerald clicks the remote himself. \u201cAllow me.\u201d',5000);}}]);}
+function loungeSit(){P.sit=true;P.sitL=true;P.x=.06;P.z=-16.6;P.eye=1.12;P.yaw=-Math.PI/2+.165;P.pitch=0;caption('Du setzt dich auf Geralds Sofa. Jetzt ist Platz f\u00fcr drei: du, in der Mitte Jays Platz, und Gerald. Seinen Schwanz hat er \u00fcber die andere Armlehne gelegt. Vor dir: das Dino-Kino. Lauf los oder tipp auf Get up, um aufzustehen.',7500);}
 CRATES.gerald={n:'Gerald\u2019s picks',b:'Gerald\u2019s crate in the lounge. A card in tidy handwriting: \u201cNo reissues. No skipping. No cookie fingers on the sleeves.\u201d',w:'the lounge'};
 var GPICKS=['hawkins','sowhat','monk','brubeck','curtis','billie','purple'];
 var GNOTE={sowhat:'Kind of Blue. If you only own one jazz record, you\u2019re doing it wrong. But start here.',monk:'Monk plays the wrong notes on purpose. That\u2019s called taste.',hawkins:'My friend Jay\u2019s namesake. The 1956 Okeh. Accept no reissues. Spiel sie hier bei mir, dann kommt Jay zu uns aufs Sofa.',brubeck:'Five-four time. Mammals find it confusing.',curtis:'Move On Up. Nine minutes, and not one second too long.',billie:'Lady in Satin. I cried. Briefly. With dignity.',purple:'The Purple People Eater. A guilty pleasure. Do not tell the cat.'};
@@ -1100,7 +1143,7 @@ var OBST=[
 ];
 PILES.forEach(function(p){OBST.push([p[0]-.2,p[0]+.2,p[1]-.2,p[1]+.2]);});
 // v4 lounge: couch, coffee table, TV sideboard, picks stool, fern pot, floor lamp, piles
-OBST.push([-.6,.45,-18.6,-16.0],[.98,1.62,-17.87,-16.73],[3.98,4.5,-18.07,-16.53],[.68,1.22,-19.75,-19.28],[-.45,-.05,-19.62,-19.18],[-.48,-.12,-15.78,-15.42],[3.75,4.15,-19.55,-19.15],[3.7,4.1,-18.75,-18.35],[-.2,.2,-19.55,-19.15]);
+OBST.push([-.6,.45,-18.6,-16.0],[.98,1.62,-17.87,-16.73],[4.1,4.5,-19.25,-15.35],[.5,.94,-15.5,-15.1],[.05,.55,-19.1,-18.62],[.68,1.22,-19.75,-19.28],[-.45,-.05,-19.62,-19.18],[-.48,-.12,-15.78,-15.42],[3.75,4.15,-19.55,-19.15],[3.7,4.1,-18.75,-18.35],[-.2,.2,-19.55,-19.15]);
 function zoneOk(x,z){
  if(z>4.7)return x>-14&&x<14&&z<15.6;          // Reeperbahn
  if(z>-1.25)return Math.abs(x)<.62;              // archway + side alley
@@ -1141,9 +1184,10 @@ var SPOTS=[
 SPOTS.push(
  {k:'gerald',x:1.0,z:-18.3,r:1.2,label:'Mit Gerald reden',fn:geraldCard},
  {k:'gsit',x:.85,z:-16.3,r:.5,label:'Sit next to Gerald',when:function(){return !P.sit;},fn:loungeSit},
- {k:'gstand',x:.06,z:-16.72,r:.6,label:'Get up',when:function(){return P.sit&&P.sitL;},fn:standUp},
+ {k:'gstand',x:.06,z:-16.6,r:.6,label:'Get up',when:function(){return P.sit&&P.sitL;},fn:standUp},
  {k:'cookies',x:1.95,z:-17.25,r:.6,label:'Have a fern cookie',fn:cookieCard},
  {k:'tv',x:3.3,z:-17.3,r:.9,label:'Watch the dinosaur documentary',fn:tvCard},
+ {k:'popcorn',x:1.0,z:-15.75,r:.4,label:'Popcorn nehmen',fn:function(){caption('Du nimmst dir eine T\u00fcte Popcorn. Gerald, ohne den Blick von der Leinwand zu nehmen: \u201eNicht so laut knuspern. Gleich kommt die beste Stelle.\u201c',6500);}},
  {k:'gpicks',x:.95,z:-18.95,r:.6,label:'Flip through Gerald\u2019s picks',fn:function(){openCrate('gerald');}}
 );
 function nearest(){var best=null,bd=9;SPOTS.forEach(function(s){if(s.when&&!s.when())return;var d=Math.hypot(P.x-s.x,P.z-s.z);if(d<s.r&&d<bd){bd=d;best=s;}});return best;}
@@ -1298,7 +1342,7 @@ var PLACES=[
  ['New School','The new shelf under the window',-3.0,-6.45,Math.PI,-.15,true],
  ['The jukebox','By the door, seven playlists',-1.0,-6.55,2.415,-.32,true]
 ];
-PLACES.push(['Gerald\u2019s lounge','Through the new door at the back: couch, TV, fern cookies',2.3,-15.35,.55,-.12,true],['Gerald','On his red couch, remote in claw, watching dinosaur documentaries',2.0,-18.3,1.85,-.15,true]);
+PLACES.push(['Gerald\u2019s lounge','Through the new door at the back: couch, Dino-Kino, fern cookies, popcorn',2.3,-15.35,.55,-.12,true],['Gerald','On his red couch, remote in claw, watching dinosaur documentaries',2.0,-18.3,1.85,-.15,true]);
 function buildPlaces(){var p=$('places');p.innerHTML='';PLACES.forEach(function(a){var b=document.createElement('button');b.type='button';b.className='pl';b.innerHTML='<span></span><small></small>';b.firstChild.textContent=a[0];b.lastChild.textContent=a[1];if(a[6]&&!doorOpen)b.classList.add('locked');b.onclick=function(){if(a[6]&&!doorOpen){p.classList.add('hide');caption('Not so fast. You have to come in from the Kiez: down the side alley, under the blinking VINYL sign, and buzz.',6500);return;}P.sit=false;P.eye=1.62;P.x=a[2];P.z=a[3];P.yaw=a[4];P.pitch=a[5];P.y=groundAt(P.x,P.z);p.classList.add('hide');closeCard();closeCrate();};p.appendChild(b);});}
 buildPlaces();
 var HELP=coarse?['Drag the left half of the screen to walk.','Drag the right half to look around.','Tap the white button at the bottom to press, dig or talk.','Record player lists everything you\u2019ve found.']:['W A S D or the arrow keys to walk. Hold Shift to go faster.','Click the scene, then move the mouse to look. Esc frees the mouse.','E or Enter does the white button: press, dig, talk.','In a crate, the left and right arrow keys flip records.','P opens the record player.'];
