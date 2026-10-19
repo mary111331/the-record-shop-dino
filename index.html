@@ -120,7 +120,7 @@ ul.ctl{padding-left:18px;margin:10px 0;color:#ddd5ca;font-size:14px}ul.ctl li{ma
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script>
-(function(){var PAGE_V='4.4-dino';window.SHOP_VERSION=PAGE_V;
+(function(){var PAGE_V='4.5-dino';window.SHOP_VERSION=PAGE_V;
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
  if(j&&j.v&&j.v!==PAGE_V){var u=location.pathname+'?v='+encodeURIComponent(j.v);if(location.search.indexOf('v='+j.v)<0){location.replace(u);}}
 }).catch(function(){});}catch(e){}
@@ -129,7 +129,7 @@ try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){retu
 <style>#verBadge{position:fixed;right:8px;bottom:6px;z-index:99999;font:11px/1.2 monospace;color:rgba(255,190,220,.75);background:rgba(0,0,0,.35);padding:2px 6px;border-radius:6px;pointer-events:none}</style>
 </head>
 <body>
-<div id="verBadge">Version 4.4-dino · Dino-Lounge</div>
+<div id="verBadge">Version 4.5-dino · Dino-Lounge</div>
 <canvas id="c" tabindex="0"></canvas>
 <div id="hud" class="hide">
   <div id="where"></div>
@@ -213,7 +213,7 @@ var CRATES={
  unk:{n:'Unbekannt',b:'A shoebox on the coffee table by the sofa. No divider, just UNBEKANNT in pencil on the lid. Old, obscure, mostly forgotten.',w:'the shoebox by the sofa'},
  r:{n:'The R crate',b:'Back wall, under the single bulb. A divider card with a big R in marker. Rarities, he says, if he says anything.',w:'under the bulb at the back'},
  ns:{n:'New School',b:'Front wall, under the little window, next to the fridge. A brand-new shelf with a NEW SCHOOL card. Three records so far, and room for more.',w:'the new shelf under the window'},
- jb:{n:'In the jukebox',b:'By the door, left of the stairs. An old jukebox with bubbling tubes, and these records live inside it.',w:'the jukebox by the door'}
+ jb:{n:'In the jukebox',b:'By the door, left of the stairs. An old jukebox with bubbling tubes, and these records live inside it. A handwritten note is taped to its front: Inspiriert von Marc-Uwe Kling und „Die Känguru-Chroniken“.',w:'the jukebox by the door'}
 };
 // ids checked with YouTube's oEmbed on Oct 15, 2026; the first id that plays wins
 var RECS=[
@@ -776,6 +776,21 @@ var jbG=new THREE.Group();jbG.position.set(-2.05,F,-5.37);scene.add(jbG);var jbT
 })();
 var jbLight=plight(0xff8a4a,.25,1.8,-2.05,F+1.15,-5.9);
 sign('JUKEBOX',-2.05,F+1.74,-5.12,Math.PI,.42);
+// ---- KLING_NOTE (v4.5): a handwritten note taped to the front of the jukebox ----
+(function(){var nt=new THREE.Mesh(new THREE.PlaneGeometry(.3,.222),new THREE.MeshBasicMaterial({color:0xece4d2,map:tex(384,284,function(g,W,H){
+ g.fillStyle='#f6eed8';g.fillRect(0,0,W,H);g.strokeStyle='rgba(90,130,190,.35)';g.lineWidth=1.5;for(var y=64;y<H;y+=46){g.beginPath();g.moveTo(10,y+6);g.lineTo(W-10,y+6);g.stroke();}
+ g.strokeStyle='rgba(200,70,60,.35)';g.beginPath();g.moveTo(34,0);g.lineTo(34,H);g.stroke();
+ g.fillStyle='rgba(235,225,180,.85)';g.save();g.translate(52,10);g.rotate(-.35);g.fillRect(-36,-12,72,26);g.restore();g.save();g.translate(W-52,10);g.rotate(.35);g.fillRect(-36,-12,72,26);g.restore();
+ g.fillStyle='#1d2350';g.textAlign='center';g.textBaseline='alphabetic';var f='"Segoe Print","Bradley Hand","Comic Sans MS","Chalkboard SE",cursive';
+ g.font='30px '+f;g.fillText('Inspiriert von',W/2+8,64);g.font='bold 36px '+f;g.fillText('Marc-Uwe Kling',W/2+8,110);g.font='30px '+f;g.fillText('und \u201eDie',W/2+8,156);g.font='bold 34px '+f;g.fillText('K\u00e4nguru-Chroniken\u201c',W/2+8,202);
+ g.font='24px '+f;g.fillText('Danke f\u00fcrs K\u00e4nguru!',W/2+8,250);
+})}));nt.position.set(.08,.5,-.246);nt.rotation.y=Math.PI;nt.rotation.z=.07;jbG.add(nt);})();
+// the same note, readable, at the top of the jukebox screen
+(function(){var css=document.createElement('style');css.textContent='#jukebox .klingnote{position:relative;max-width:420px;margin:16px auto 6px;padding:18px 18px 14px 26px;background:repeating-linear-gradient(#f6eed8 0 27px,rgba(90,130,190,.35) 27px 28px);color:#1d2350;font:17px/28px "Segoe Print","Bradley Hand","Comic Sans MS","Chalkboard SE",cursive;transform:rotate(-1.4deg);box-shadow:0 6px 18px rgba(0,0,0,.45);border-left:2px solid rgba(200,70,60,.35)}#jukebox .klingnote::before,#jukebox .klingnote::after{content:"";position:absolute;top:-9px;width:64px;height:20px;background:rgba(235,225,180,.8);box-shadow:0 1px 2px rgba(0,0,0,.2)}#jukebox .klingnote::before{left:14px;transform:rotate(-8deg)}#jukebox .klingnote::after{right:14px;transform:rotate(8deg)}#jukebox .klingnote .kn1{display:block;font:12px/1.4 Georgia,serif;font-style:italic;color:#6a5a40;margin-bottom:2px}#jukebox .klingnote b{font-weight:700}';document.head.appendChild(css);
+ var jb=document.getElementById('jukebox');if(!jb)return;var lede=jb.querySelector('.lede');var d=document.createElement('div');d.className='klingnote';d.id='klingNote';d.setAttribute('role','note');
+ d.innerHTML='<span class="kn1">Ein Zettel, mit Klebeband an die Jukebox geklebt:</span>Inspiriert von <b>Marc-Uwe Kling</b> und <b>\u201eDie K\u00e4nguru-Chroniken\u201c</b>. Ohne sein K\u00e4nguru g\u00e4be es Gerald nicht. Danke!';
+ if(lede&&lede.parentNode)lede.parentNode.insertBefore(d,lede.nextSibling);else jb.querySelector('.wrap').appendChild(d);})();
+
 // ---- disco balls over the bottom step ----
 var discoMat=new THREE.MeshPhongMaterial({color:0xb8b8c0,specular:0xffffff,shininess:90,emissive:0x2a2a30,flatShading:true});var discoBalls=[];
 [[-.7,F+1.95,-5.85,.2],[.75,F+1.85,-6.35,.16]].forEach(function(d){box(.006,CEIL-d[1]-d[3],.006,MAT.dark,d[0],(CEIL+d[1]+d[3])/2,d[2]);var b=new THREE.Mesh(new THREE.IcosahedronGeometry(d[3],2),discoMat);b.position.set(d[0],d[1],d[2]);scene.add(b);discoBalls.push(b);});
