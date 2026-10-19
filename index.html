@@ -120,7 +120,7 @@ ul.ctl{padding-left:18px;margin:10px 0;color:#ddd5ca;font-size:14px}ul.ctl li{ma
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
 <script>
-(function(){var PAGE_V='4.2-dino';window.SHOP_VERSION=PAGE_V;
+(function(){var PAGE_V='4.3-dino';window.SHOP_VERSION=PAGE_V;
 try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(j){
  if(j&&j.v&&j.v!==PAGE_V){var u=location.pathname+'?v='+encodeURIComponent(j.v);if(location.search.indexOf('v='+j.v)<0){location.replace(u);}}
 }).catch(function(){});}catch(e){}
@@ -129,7 +129,7 @@ try{fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){retu
 <style>#verBadge{position:fixed;right:8px;bottom:6px;z-index:99999;font:11px/1.2 monospace;color:rgba(255,190,220,.75);background:rgba(0,0,0,.35);padding:2px 6px;border-radius:6px;pointer-events:none}</style>
 </head>
 <body>
-<div id="verBadge">Version 4.2-dino · Dino-Lounge</div>
+<div id="verBadge">Version 4.3-dino · Dino-Lounge</div>
 <canvas id="c" tabindex="0"></canvas>
 <div id="hud" class="hide">
   <div id="where"></div>
@@ -987,13 +987,85 @@ function geraldChat(you,said){var e=EP[TV.ep],ps=[];
  if(!you)ps.push('Ein Parasaurolophus in senfgelber Tweedweste und Fliege, tief im roten Samtsofa. Monokel im Auge, die Fernbedienung in der einen Klaue, ein Farnkeks in der anderen. Er dreht den Kopf zu dir.');
  else ps.push('Du: '+you);
  ps.push(said||gcPick('greet',GCHAT.greet));
- var b=GCHAT.topics.map(function(tp){return {t:tp[1],fn:function(){var a;if(tp[0]==='doc'){a=gcPick('doc'+e.kind,GCHAT.doc[e.kind]||GCHAT.doc.para);a='Im Fernsehen l\u00e4uft \u201e'+EP[TV.ep].t+'\u201c. '+a;}else a=gcPick(tp[0],tp[2]);geraldChat(tp[1],a);}};});
+ var b=GCHAT.topics.map(function(tp){return {t:tp[1],fn:function(){var a;if(tp[0]==='kropo'){gkLecture(0);return;}if(tp[0]==='anarchie'){gkAnarchy();return;}if(tp[0]==='doc'){a=gcPick('doc'+e.kind,GCHAT.doc[e.kind]||GCHAT.doc.para);a='Im Fernsehen l\u00e4uft \u201e'+EP[TV.ep].t+'\u201c. '+a;}else a=gcPick(tp[0],tp[2]);geraldChat(tp[1],a);}};});
  b.push({t:'Moin sagen',fn:function(){geraldHonk();geraldChat('Moin, Gerald!','Gerald legt den Kopf zur\u00fcck und antwortet durch seinen Kamm: ein langer, tiefer Ton, wie ein Schiff auf der Elbe. Dann, ganz vornehm: \u201eMoin.\u201c');}});
  if(typeof geraldTalk==='function')b.push({t:'Eigene Frage stellen',fn:function(){geraldTalk();}});
  b.push({t:'Seine Plattentipps',fn:function(){closeCard();openCrate('gerald');}});
  b.push({t:'Tsch\u00fcss, Gerald',pri:true,fn:function(){closeCard();caption('Gerald hebt kurz die Klaue mit dem Farnkeks, ohne vom Fernseher wegzusehen. \u201eKomm wieder. Mit Vinyl.\u201c',5500);}});
  card('Gerald','Parasaurolophus \u00b7 Kurator der Lounge \u00b7 Freund von Screamin\u2019 Jay',ps,b);}
 geraldCard=geraldChat;
+// ---------- v4.x-dino: Gerald's Kropotkin lecture (button "Erzähl mir von Kropotkin", "Was ist Anarchie?", or ask your own question) ----------
+(function(){var s=document.createElement('style');s.textContent='#card p.gkb{background:#3b2a21;border:1px solid #5a4032;border-radius:16px 16px 16px 4px;padding:11px 14px;font:italic 16px/1.5 var(--serif);color:#f6e7d2}#card p.gks{font-size:13px;font-style:italic;color:var(--muted)}#card p.gkn{font:11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}#card p.gky{font-size:14px;color:#cdbfae}#card input.gki{width:100%;box-sizing:border-box;margin:0 0 10px;padding:10px 12px;border-radius:10px;border:1px solid #5a4032;background:#120d0b;color:#f6e7d2;font-size:16px}';document.head.appendChild(s);})();
+var GK={sub:'Parasaurolophus \u00b7 h\u00e4lt einen Vortrag \u00b7 Thema: Pjotr Kropotkin',
+ lec:[
+  ['Gerald schaltet den Fernseher stumm, legt die Fernbedienung auf die Sofalehne, r\u00fcckt sein Monokel zurecht und r\u00e4uspert sich durch den Kamm. Ein tiefer, feierlicher Ton.','Also. Pjotr Kropotkin. Russe, geboren 1842, und jetzt kommt\u2019s: ein echter F\u00fcrst. Adel, Pal\u00e4ste, das ganze Programm. Und was macht der Mann? Er wirft den Titel weg. Einfach weg. Respekt.'],
+  ['Er wedelt mit dem Farnkeks Richtung Fenster, als l\u00e4ge gleich dahinter Sibirien.','Dann geht er nach Sibirien, als Geograf und Naturforscher, und guckt sich Tiere an. Damals haben alle gesagt: Evolution ist Kampf, jeder gegen jeden, der St\u00e4rkere gewinnt. Und Kropotkin steht da in der K\u00e4lte und sieht \u2026 Herden, die zusammenhalten. V\u00f6gel, die sich gegenseitig warnen. Tiere, die \u00fcberleben, weil sie sich helfen, nicht weil sie sich fertigmachen. Dar\u00fcber schreibt er dann ein Buch: Gegenseitige Hilfe. Sein Punkt war: Zusammenarbeit ist genauso Natur wie Konkurrenz. Vielleicht sogar mehr.'],
+  ['Er tippt sich mit der Klaue stolz an den Kamm.','Und ich sag dir was: Recht hat er. Wir Parasaurolophen waren Herdentiere. Einer hat getr\u00f6tet, alle wussten Bescheid. Keine Chefs, keine Miete, nur Farne f\u00fcr alle.'],
+  ['Vor Begeisterung f\u00e4llt ihm das Monokel aus dem Auge. Er f\u00e4ngt es an der Kette auf und klemmt es w\u00fcrdevoll wieder ein.','Ach ja, er sa\u00df dann in Sankt Petersburg im Gef\u00e4ngnis und ist aus dem Gef\u00e4ngniskrankenhaus abgehauen, mit einer Geige als Signal und einer Kutsche, die drau\u00dfen gewartet hat. Ein Mann mit Stil.'],
+  ['Er greift beil\u00e4ufig nach der Fernbedienung und dr\u00fcckt sie sanft an seine Weste.','Seine Idee: Eine Gesellschaft ohne Herrscher, in der Menschen sich freiwillig organisieren und teilen. So wie dieser Laden. Na ja. Fast. Die Fernbedienung ist \u2026 vor\u00fcbergehend kollektiviert. Bei mir.']],
+ fu:[
+  ['remote','Moment mal. Und die Fernbedienung?',[
+   ['Gerald r\u00fcckt das Monokel zurecht. Sehr langsam.','Ich bitte dich. Ich behalte sie doch nicht. Ich verwalte sie nur treuh\u00e4nderisch f\u00fcrs Kollektiv. Irgendwer muss dem Kollektiv ja zeigen, was gut ist.'],
+   ['Er dreht die Fernbedienung so, dass du sie nicht erreichst.','Treuh\u00e4nderisch, hab ich gesagt. F\u00fcrs Kollektiv. Das Kollektiv hat \u00fcbrigens gerade abgestimmt: Doku. Einstimmig. Ich war die Mehrheit.'],
+   ['Er seufzt durch den Kamm, ein kleiner, beleidigter Ton.','Gut. Du darfst die Fernbedienung ansehen. Gemeinsam. Von da dr\u00fcben. Gegenseitige Hilfe hei\u00dft auch: Einer h\u00e4lt sie, alle anderen genie\u00dfen das Programm.']]],
+  ['brot','Was ist \u201eDie Eroberung des Brotes\u201c?',[
+   ['Gerald bricht seinen Farnkeks feierlich in zwei H\u00e4lften.','Sein Klassiker. Erschienen 1892, zuerst auf Franz\u00f6sisch: La Conqu\u00eate du pain. Seine Frage war ganz einfach: Warum soll irgendwer hungern oder frieren, wenn genug f\u00fcr alle da ist? Erst Brot, ein Dach \u00fcber dem Kopf und W\u00e4rme f\u00fcr alle. Dann reden wir \u00fcber den Rest.','Ich wende das \u00fcbrigens konsequent auf Farnkekse an. Das Tablett geh\u00f6rt allen. Nimm dir einen. Aber nicht den mit dem sch\u00f6nsten Farnblatt, den hab ich mir gemerkt.']]],
+  ['exil','Und wo war er nach der Flucht?',[
+   ['Gerald schaut aus dem Fenster in den Hamburger Nieselregen.','Im Exil, lange. Erst in der Schweiz und in Frankreich, ab 1886 dann in England. Da ist er bis 1917 geblieben. Ungef\u00e4hr vierzig Jahre weg von zu Hause, alles zusammen. In der Zeit hat er seine gro\u00dfen B\u00fccher geschrieben, Gegenseitige Hilfe kam 1902.','Ein Ex-F\u00fcrst im englischen Nieselregen, mit Tee und Notizb\u00fcchern. Ich kenne das Gef\u00fchl. Hamburg ist auch nicht Sibirien, aber im November ist es nah dran.']]],
+  ['1917','Was passierte 1917?',[
+   ['Gerald setzt sich auf. Das Sofa \u00e4chzt.','Im Juni 1917, nach der Revolution, ist er zur\u00fcck nach Russland. Nach vierzig Jahren! Voller Hoffnung. Und dann haben die Bolschewiki alles an sich gezogen: eine Partei, alles zentral, alles von oben. Kropotkin hat ihnen ziemlich deutlich gesagt, dass man so eine Revolution erstickt.','Erst widerspricht er dem Zaren, dann den Revolution\u00e4ren. Konsequent bis zum Schluss. Das nenne ich R\u00fcckgrat. Und ich wei\u00df, wovon ich rede. Meins ist ziemlich lang.']]],
+  ['1921','Wie ging seine Geschichte zu Ende?',[
+   ['Gerald nimmt das Monokel ab und poliert es l\u00e4nger als n\u00f6tig.','Er ist am 8. Februar 1921 gestorben, in Dmitrow bei Moskau. Die Beerdigung war am 13. Februar in Moskau. Anarchistische Gefangene durften f\u00fcr diesen Tag raus, um ihn zu verabschieden. Es war f\u00fcr Jahrzehnte die letzte offene Versammlung von Anarchisten in Russland.','Ein Mann, der an gegenseitige Hilfe geglaubt hat. Und am Ende sind alle gekommen. Das finde ich sch\u00f6n.']]],
+  ['uns','Und was hei\u00dft das f\u00fcr uns?',[
+   ['Gerald l\u00e4chelt, soweit ein Entenschnabel l\u00e4cheln kann.','Ganz einfach. Hilf dem, der neben dir sitzt. Teil deine Kekse. Und wenn einer tr\u00f6tet, h\u00f6r hin.']]]],
+ n:{}};
+function gkFold(t){return (' '+String(t||'').toLowerCase()+' ').replace(/\u00e4/g,'ae').replace(/\u00f6/g,'oe').replace(/\u00fc/g,'ue').replace(/\u00df/g,'ss').replace(/[^a-z0-9]+/g,' ');}
+function gkCard(you,items,btns,note){card('Gerald',GK.sub,[],btns);var c=$('card'),row=c.querySelector('.row'),add=function(cls,t){var p=document.createElement('p');p.className=cls;p.textContent=t;c.insertBefore(p,row);return p;};
+ if(note)add('gkn',note);if(you)add('gky','Du: '+you);items.forEach(function(it){add(it[0],it[1]);});c.scrollTop=0;return c;}
+function gkRest(skip){var b=GK.fu.filter(function(f){return f[0]!==skip||f[2].length>1;}).map(function(f){return {t:f[1],fn:function(){gkFollow(f[0]);}};});
+ b.push({t:'Vortrag nochmal von vorn',fn:function(){gkLecture(0);}});
+ b.push({t:'Zur\u00fcck zu den anderen Themen',fn:function(){geraldChat('Danke f\u00fcr den Vortrag, Gerald.','\u201eGern. Die n\u00e4chste Vorlesung ist \u00fcbrigens auch kostenlos. Bildung geh\u00f6rt allen.\u201c');}});
+ b.push({t:'Tsch\u00fcss, Gerald',pri:true,fn:function(){closeCard();caption('Gerald hebt die Klaue mit dem Farnkeks. \u201eKomm wieder. Mit Vinyl. Und mit Fragen.\u201c',5500);}});return b;}
+function gkLecture(i,you){i=i||0;var L=GK.lec[i],last=i===GK.lec.length-1;if(i===0&&typeof GER!=='undefined')GER.click=.6;
+ var items=[['gks',L[0]],['gkb','\u201e'+L[1]+'\u201c']],b=[];
+ if(!last){b.push({t:'Weiter \u203a',pri:true,fn:function(){gkLecture(i+1);}});if(i>0)b.push({t:'\u2039 Zur\u00fcck',fn:function(){gkLecture(i-1);}});b.push({t:'Zu den Fragen springen',fn:function(){gkLecture(GK.lec.length-1);}});}
+ else{items.push(['gks','Er l\u00e4sst eine kleine Pause f\u00fcr Applaus. Dann tr\u00f6tet er einmal kurz und tief durch den Kamm, wie ein Schiff auf der Elbe. Fragen sind erlaubt.']);if(typeof geraldHonk==='function')setTimeout(geraldHonk,250);b=gkRest(null);if(i>0)b.splice(b.length-3,0,{t:'\u2039 Zur\u00fcck',fn:function(){gkLecture(i-1);}});}
+ gkCard(i===0?(you||'Erz\u00e4hl mir von Kropotkin.'):null,items,b,'Vortrag \u00b7 Teil '+(i+1)+' von '+GK.lec.length);}
+function gkFollow(k,you){var f=GK.fu.filter(function(x){return x[0]===k;})[0];if(!f)return gkLecture(0);var n=GK.n[k]||0;GK.n[k]=n+1;var a=f[2][n%f[2].length],items=[['gks',a[0]]];
+ for(var j=1;j<a.length;j++)items.push(['gkb','\u201e'+a[j]+'\u201c']);if(k==='uns'&&typeof geraldHonk==='function')setTimeout(geraldHonk,400);
+ gkCard(you||f[1],items,gkRest(k));}
+function gkAnarchy(you){gkCard(you||'Was ist Anarchie?',[['gks','Gerald setzt sich gerade hin und zieht die Weste glatt.'],['gkb','\u201eAnarchie hei\u00dft nicht Chaos. Anarchie hei\u00dft: Keiner ist der Chef, und trotzdem funktioniert\u2019s, weil alle aufeinander achten. Wie Jazz. Wie eine Herde.\u201c'],['gkb','\u201eAber daf\u00fcr muss ich ausholen. Mit dem sympathischsten Anarchisten, den ich kenne. Setz dich.\u201c']],
+ [{t:'Vortrag \u00fcber Kropotkin anh\u00f6ren',pri:true,fn:function(){gkLecture(0,'Erz\u00e4hl mir von Kropotkin.');}},{t:'Zur\u00fcck zu den anderen Themen',fn:function(){geraldChat();}}]);}
+var GK_KEYS=[
+ [['kropotkin','kropotnik','krapotkin','kropatkin','kropotkins','pjotr','pyotr','peter kropotkin','kropo','gegenseitige hilfe','gegenseitigen hilfe','gegenseitig','mutual aid','vortrag','vorlesung'],function(q){gkLecture(0,q);}],
+ [['eroberung','brotes','brot','conquete','conquest'],function(q){gkFollow('brot',q);}],
+ [['exil','england','london','schweiz','flucht','geige','kutsche'],function(q){gkFollow('exil',q);}],
+ [['1917','bolschewik','bolschewiki','lenin','revolution','sowjet'],function(q){gkFollow('1917',q);}],
+ [['1921','beerdigung','begraebnis','gestorben','tod','moskau','dmitrow'],function(q){gkFollow('1921',q);}],
+ [['anarchie','anarchismus','anarchist','anarchistin','anarchisten','anarcho','herrschaft','herrscher'],function(q){gkAnarchy(q);}],
+ [['fernbedienung','remote','kollektiv','kollektiviert','treuhaend'],function(q){gkFollow('remote',q);}],
+ [['spotify','streaming','stream','streamen'],function(q){gkTopic('stream',q);}],
+ [['bluetooth','kopfhoerer','airpods','earbuds'],function(q){gkTopic('buds',q);}],
+ [['keks','kekse','farn','farnkeks','farnkekse','essen','hunger'],function(q){gkTopic('food',q);}],
+ [['jay','katze','screamin'],function(q){gkTopic('jay',q);}],
+ [['doku','fernseher','fernsehen','dinosaurier','dino'],function(q){gkTopic('doc',q);}],
+ [['musik','platte','platten','hoerst','vinyl','jazz','album'],function(q){gkTopic('hear',q);}]];
+function gkTopic(k,q){var tp=GCHAT.topics.filter(function(t){return t[0]===k;})[0];if(!tp)return gkFallback(q);var a;
+ if(k==='doc'){var e=EP[TV.ep];a=gcPick('doc'+e.kind,GCHAT.doc[e.kind]||GCHAT.doc.para);a='Im Fernsehen l\u00e4uft \u201e'+e.t+'\u201c. '+a;}else a=gcPick(k,tp[2]);geraldChat(q,a);}
+var GK_FALL=['\u201eHm. Dar\u00fcber denke ich in der n\u00e4chsten Werbepause nach. Ich gucke keine Werbung. Frag mich lieber was \u00fcber Kropotkin.\u201c','\u201eInteressante Frage. Die Antwort steht vermutlich in einem Buch, das ich hinter dem Sofa gestapelt habe. Probier\u2019s mal mit Kropotkin, Anarchie oder Farnkeksen.\u201c','\u201eDas wei\u00df ich nicht. Ein Dinosaurier, der zugibt, dass er etwas nicht wei\u00df. Schreib dir das auf, das passiert alle f\u00fcnfundsiebzig Millionen Jahre einmal.\u201c'];
+function gkFallback(q){geraldChat(q,gcPick('gkfall',GK_FALL));}
+function gkAsk(q){q=String(q||'').trim();if(!q){geraldTalk();return;}var f=gkFold(q),hits=[];
+ GK_KEYS.forEach(function(r,ri){var l=0;r[0].forEach(function(w){if(f.indexOf(' '+w)>=0&&w.length>l)l=w.length;});if(l)hits.push([ri,l]);});
+ if(!hits.length)return gkFallback(q);
+ var sub=hits.filter(function(h){return h[0]>=1&&h[0]<=4;});
+ if(hits[0][0]===0&&sub.length){GK_KEYS[sub[0][0]][1](q);return;}
+ hits.sort(function(a,b){return b[1]-a[1]||a[0]-b[0];});GK_KEYS[hits[0][0]][1](q);}
+if(typeof geraldTalk!=='function'){var geraldTalk=function(){card('Gerald','Parasaurolophus \u00b7 h\u00f6rt zu \u00b7 meistens',[],[{t:'Fragen',pri:true,fn:function(){gkAsk($('gkIn').value);}},{t:'Erz\u00e4hl mir von Kropotkin',fn:function(){gkLecture(0);}},{t:'Zur\u00fcck',fn:function(){geraldChat();}}]);
+  var c=$('card'),row=c.querySelector('.row'),p=document.createElement('p');p.className='gks';p.textContent='Gerald nimmt das Monokel kurz heraus, putzt es an der Weste und sieht dich erwartungsvoll an. \u201eFrag.\u201c';c.insertBefore(p,row);
+  var inp=document.createElement('input');inp.id='gkIn';inp.className='gki';inp.type='text';inp.autocomplete='off';inp.placeholder='z.B. Erz\u00e4hl mir von Kropotkin';inp.maxLength=200;
+  var stop=function(e){e.stopPropagation();if(e.type==='keydown'&&e.key==='Enter'){e.preventDefault();gkAsk(inp.value);}};inp.addEventListener('keydown',stop);inp.addEventListener('keyup',stop);inp.addEventListener('keypress',function(e){e.stopPropagation();});
+  c.insertBefore(inp,row);setTimeout(function(){try{inp.focus();}catch(e){}},50);};}
+(function(){var t=GCHAT.topics,j=-1;for(var i=0;i<t.length;i++)if(t[i][0]==='jay')j=i;if(j<0)j=t.length;t.splice(j,0,['kropo','Erz\u00e4hl mir von Kropotkin',null],['anarchie','Was ist Anarchie?',null]);})();
 function cookieCard(){var left=COOK.filter(function(c){return c.visible;}).length;
  card('Fern cookies','On the coffee table, on a brass tray',['Round cookies, each one pressed with a little fern leaf, chocolate chips in between. A folded card: \u201cFARNKEKSE \u00b7 mit Schoko \u00b7 Geralds\u201d.',left?(left+' left on the tray. Gerald has one in his other claw already.'):'The tray is empty. Only crumbs.'],
  [{t:left?'Take one':'Ask Gerald for more',pri:true,fn:function(){closeCard();var v=COOK.filter(function(c){return c.visible;});if(v.length){v[v.length-1].visible=false;caption('You take one. Crunchy at the edge, soft and chocolatey in the middle. From the couch, eyes on the TV: \u201cMind the crumbs. That rug is older than your records.\u201d',6500);}else{COOK.forEach(function(c){c.visible=true;});caption('Gerald sighs, points the remote at the kitchen and clicks. When you look back, the tray is full again. \u201cDon\u2019t ask.\u201d',6000);}}}]);}
@@ -1346,7 +1418,7 @@ if(inShop()&&P.z<-7.5&&P.x>-1.5&&(mirN++%2===0)){
 }
 frame();
 window.__shop={scene:scene,camera:camera,P:P,open:openDoor,state:function(){return{x:P.x,z:P.z,y:P.y,door:doorOpen,now:NOW,playing:PLAYING,found:FOUND.length,tryIdx:tryIdx,cur:(yt&&yt.getCurrentTime)?yt.getCurrentTime():null,vid:(yt&&yt.getVideoData)?(yt.getVideoData()||{}).video_id:null,ytState:(yt&&yt.getPlayerState)?yt.getPlayerState():null,snd:snd.on,master:master?master.gain.value:null,hum:gHum?gHum.gain.value:null,house:gHouse?gHouse.gain.value:null,houseOn:houseOn,street:gStreet?gStreet.gain.value:null,cat:CAT.st,inShop:inShop()};},tip:ownerTip,unk:function(){return RECS.filter(function(r){return r.cr==='unk';}).map(function(r){return r.id;});},recs:function(){return RECS.map(function(r){return r.id;});},play:playRec,crate:openCrate,spots:SPOTS,nearest:nearest};
-window.__shop.renderer=renderer;window.__shop.dino={free:free,zoneOk:zoneOk,ger:GER,tv:TV,geraldCard:geraldCard,talk:geraldChat,cookieCard:cookieCard,tvCard:tvCard,sit:loungeSit,stand:standUp,where:where,ep:EP,openCrate:openCrate,cr:function(){return CR;}};window.__shop.jukebox=openJukebox;window.__shop.jbHitAt=jbHitAt;window.__shop.playlists=PLAYLISTS;window.__shop.jb=function(){return JB?{k:JB.k,i:JB.i,len:JB.order.length,id:NOW,shuf:JB.shuf}:null;};window.__shop.jbStart=function(k,id,sh){jbStart(PLAYLISTS.findIndex(function(p){return p.k===k;}),id||null,!!sh);};window.__shop.next=nextRec;window.__shop.seekEnd=function(){if(yt&&yt.getDuration)try{yt.seekTo(Math.max(0,yt.getDuration()-4),true);}catch(e){}};
+window.__shop.renderer=renderer;window.__shop.dino={free:free,zoneOk:zoneOk,ger:GER,tv:TV,geraldCard:geraldCard,talk:geraldChat,kropo:{lecture:function(i){gkLecture(i||0);},follow:function(k){gkFollow(k);},ask:function(q){gkAsk(q);},anarchy:function(){gkAnarchy();}},cookieCard:cookieCard,tvCard:tvCard,sit:loungeSit,stand:standUp,where:where,ep:EP,openCrate:openCrate,cr:function(){return CR;}};window.__shop.jukebox=openJukebox;window.__shop.jbHitAt=jbHitAt;window.__shop.playlists=PLAYLISTS;window.__shop.jb=function(){return JB?{k:JB.k,i:JB.i,len:JB.order.length,id:NOW,shuf:JB.shuf}:null;};window.__shop.jbStart=function(k,id,sh){jbStart(PLAYLISTS.findIndex(function(p){return p.k===k;}),id||null,!!sh);};window.__shop.next=nextRec;window.__shop.seekEnd=function(){if(yt&&yt.getDuration)try{yt.seekTo(Math.max(0,yt.getDuration()-4),true);}catch(e){}};
 })();
 </script>
 </body>
